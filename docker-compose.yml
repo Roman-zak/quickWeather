@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  backend:
+    build: backend
+    container_name: backend
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+    networks:
+      - task-1-network
+    environment:
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+
+  frontend:
+    build: ui
+    container_name: frontend
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8000:8000"
+    networks:
+      - task-1-network
+    volumes:
+      - C:\Users\Roman.Zakaliak\IdeaProjects\api\ui\src:/ui-src
+
+networks:
+  task-1-network:

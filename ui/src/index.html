@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Quick Weather</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <h1>Quick weather</h1>
+    <select id="citySelect" onchange="getWeather()">
+      <option value="">--Please choose a city--</option>
+      <option value="Kyiv" coordinates='{ "latitude": 50.4501, "longitude": 30.5234 }'>Kyiv</option>
+      <option value="Lviv" coordinates='{ "latitude": 49.8397, "longitude": 24.0297 }'>Lviv</option>
+      <option value="Kharkiv" coordinates='{ "latitude": 49.9935, "longitude": 36.2304 }'>Kharkiv</option>
+      <option value="Odesa" coordinates='{ "latitude": 46.4825, "longitude": 30.7233 }'>Odesa</option>
+    </select>
+    <br><br>
+    <div id="weather">
+        <h3 id="city"></h3>
+        <h5 id="description"></h5>
+        <p>Temperature: <span id="temperature"></span></p>
+        <p>Wind Speed: <span id="windspeed"></span></p>
+        <p>Wind Direction: <span id="winddirection"></span></p>
+        <p>Time: <span id="time"></span></p>
+    </div>
+    <script type="text/javascript" >
+        function getWeather(){
+          var citySelect = document.getElementById("citySelect");
+          var selectedOption = citySelect.options[citySelect.selectedIndex];
+          var coordinatesString = selectedOption.getAttribute("coordinates");
+          var coordinates = JSON.parse(coordinatesString);
+          fetch("http://localhost:8080/currentWeather?longitude=" + coordinates.longitude+"&latitude=" + coordinates.latitude)
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById("city").innerHTML = selectedOption.value;
+            document.getElementById("description").innerHTML = data.description;
+            document.getElementById("temperature").innerHTML = data.temperature + "°C";
+            document.getElementById("windspeed").innerHTML = data.windspeed + " m/s";
+            document.getElementById("winddirection").innerHTML = data.winddirection + "°";
+            document.getElementById("time").innerHTML = data.time.split("T")[1];
+          }).catch(error => console.error(error)); // Error handling;
+        }
+    </script>
+  </body>
+</html>
