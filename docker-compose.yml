@@ -13,9 +13,8 @@ services:
       - task-1-network
     environment:
       JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
-
   frontend:
-    build: ui
+    image: nginx:alpine
     container_name: frontend
     restart: unless-stopped
     tty: true
@@ -25,6 +24,7 @@ services:
       - task-1-network
     volumes:
       - C:\Users\Roman.Zakaliak\IdeaProjects\api\ui\src:/ui-src
+      - C:\Users\Roman.Zakaliak\IdeaProjects\api\ui\nginx\nginx.conf:/etc/nginx/conf.d/default.conf
 
 networks:
   task-1-network:

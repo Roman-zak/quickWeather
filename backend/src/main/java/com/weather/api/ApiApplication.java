@@ -18,7 +18,6 @@ public class ApiApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/currentWeather")
-//						.allowedOrigins("*");
 						.allowedOrigins("http://localhost:8000");
 			}
 		};

@@ -17,11 +17,11 @@
     <br><br>
     <div id="weather">
         <h3 id="city"></h3>
+        <h5 id="time"></h5>
         <h5 id="description"></h5>
         <p>Temperature: <span id="temperature"></span></p>
         <p>Wind Speed: <span id="windspeed"></span></p>
         <p>Wind Direction: <span id="winddirection"></span></p>
-        <p>Time: <span id="time"></span></p>
     </div>
     <script type="text/javascript" >
         function getWeather(){
@@ -37,7 +37,15 @@
             document.getElementById("temperature").innerHTML = data.temperature + "°C";
             document.getElementById("windspeed").innerHTML = data.windspeed + " m/s";
             document.getElementById("winddirection").innerHTML = data.winddirection + "°";
-            document.getElementById("time").innerHTML = data.time.split("T")[1];
+            // Convert the timestamp to a Date object
+            const date = new Date(data.time);
+            // Get the local time zone offset in minutes
+            const offset = date.getTimezoneOffset();
+            // Adjust the date by the offset
+            date.setTime(date.getTime() - offset * 60 * 1000);
+            // Format the date as a string in the local time zone
+            const localTime =  date.toLocaleString();
+            document.getElementById("time").innerHTML = localTime;
           }).catch(error => console.error(error)); // Error handling;
         }
     </script>
