@@ -9,11 +9,8 @@ The API endpoint /currentWeather accepts a geographical coordinate and responds 
 
 ## Error Codes
 In case an error occurs, for example a URL coordinate parameter is not correctly specified, a JSON error object is returned with a HTTP 400 status code.
-### 3.1. Weather
 
-```
-GET https://api.medium.com/v1/me
-```
+###  Weather
 
 Example request:
 
@@ -23,8 +20,13 @@ Content-Type: application/json
 Accept: application/json
 Accept-Charset: utf-8
 ```
+With the following parameters:
+| Parameter       | Type     | Required?  | Description                                     |
+| -------------   |----------|------------|-------------------------------------------------|
+| `latitude`     | float   | required   | Geographical WGS84 coordinate of the location latitude.   |
+| `longitude`     | float   | required   | Geographical WGS84 coordinate of the location longitude.   |
 
-The response is a Weather object within a data envelope.
+The response is a Weather object.
 
 Example response:
 
@@ -48,16 +50,16 @@ Where a Weather object is:
 
 | Field   | Type    | Description                                         |
 |---------|---------|-----------------------------------------------------|
-| latitude   | decimal  | Coordinates latitude                            |
-| longitude | decimal  | Coordinates longitude                            |
-| temperature    | decimal  | Air temperature in Celsium degrees          |
-| windspeed     | decimal  | Windspeed in minutes per second              |
-| winddirection | decimal | Winddirection in degrees                      |
+| latitude   | float  | 	Geographical WGS84 coordinate of the location latitude                            |
+| longitude | float  | 	Geographical WGS84 coordinate of the location longitude                            |
+| temperature    | float  | Air temperature in Celsium degrees          |
+| windspeed     | float  | Windspeed in minutes per second              |
+| winddirection | float | Winddirection in degrees                      |
 | description | string  | Weather condition                               |
-| time | string  | Returned weather time of measurement in GMT+0 timezone |
+| time | string  | Time of weather measurement in GMT+0 timezone   |
 
 Possible errors:
 
 | Error code     | Description                                                  |
 |----------------|--------------------------------------------------------------|
-| 400 BedRequest | The `latitude` or `longitude` is invalid or has been revoked.|
+| 400 BedRequest | The `latitude` or `longitude` are invalid .|
